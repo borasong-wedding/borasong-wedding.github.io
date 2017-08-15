@@ -185,15 +185,15 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <p class="large text-muted">서울 강남구 청담동 82-4 <a href="http://theclasscheongdam.com/bbs/write.php?bo_table=contactus">더클래스 청담</a><br/>
                     <p class="large text-muted">지하철 분당선 압구정로데오역 3번출구<br/>
-                        
                     </p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1582.1222171249833!2d127.04098787135283!3d37.525734900353285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca4784ed95631%3A0x12a8bf0e6438ac7!2z642U7YG0656Y7IqkIOyyreuLtA!5e0!3m2!1sko!2skr!4v1502552029976" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
-                    <!-- <img src="img/map01.png" class="img-responsive img-centered" /> -->
-                    <p class="large text-muted">한남주차장 셔틀 운행합니다<br />
-                    화환은 정중히 사양합니다</p>
-                    
-                    <div id="map" style="width:100%;height:400px;"></div>
+                    <!-- google map -->
+                    <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1582.1222171249833!2d127.04098787135283!3d37.525734900353285!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca4784ed95631%3A0x12a8bf0e6438ac7!2z642U7YG0656Y7IqkIOyyreuLtA!5e0!3m2!1sko!2skr!4v1502552029976" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+                    <!-- naver map -->
+                    <div id="map" style="width:100%;height:330px;"></div>
+                    <p class="text-muted">한남주차장(서울 강남구 청담동 96-27) 셔틀 운행합니다<br />
+                    <b>화환은 정중히 사양합니다</b></p>
                 </div>
             </div>
         </div>
@@ -433,44 +433,79 @@
 
     <!-- naver map  -->
     <script>
-      var map = new naver.maps.Map('map', {
-            center: new naver.maps.LatLng(37.526098, 127.042259),
-            zoom: 10
-            });
+    var map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(37.525741, 127.043225),
+        // center: new naver.maps.LatLng(37.526098, 127.042259),
+        zoom: 11
+    });
 
-      var myaddress = '압구정로60길';// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
-      naver.maps.Service.geocode({address: myaddress}, function(status, response) {
-          if (status !== naver.maps.Service.Status.OK) {
-              return alert(myaddress + '의 검색 결과가 없거나 기타 네트워크 에러');
-          }
-          var result = response.result;
-          // 검색 결과 갯수: result.total
-          // 첫번째 결과 결과 주소: result.items[0].address
-          // 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
-          var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
-          map.setCenter(myaddr); // 검색된 좌표로 지도 이동
+    var myaddress = '압구정로60길';// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
 
-        // 마커 표시
-        var marker = new naver.maps.Marker({
+
+    var parkingMarker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(37.524937, 127.045755),
+        map: map,
+        icon: {
+            url: 'img/parkingMapIcon.png',
+            size: new naver.maps.Size(35, 40),
+            origin: new naver.maps.Point(0, 0),
+            anchor: new naver.maps.Point(15, 40)
+        }
+    });
+
+    var parkingStr = ['<div class="iw_inner">',
+        '   <p>서울 강남구 청담동 96-27 <br />',
+        '       <a href="#">한남 주차장</a>',
+        '   </p>',
+        '</div>'].join('');
+    
+    naver.maps.Event.addListener(parkingMarker, "click", function(e) {
+        if (parkingInfowindow.getMap()) {
+            parkingInfowindow.close();
+        } else {
+            parkingInfowindow.open(map, parkingMarker);
+        }
+    });
+
+    // 마크 클릭시 인포윈도우 오픈
+    var parkingInfowindow = new naver.maps.InfoWindow({
+        //   content: '<h4> [네이버 개발자센터]</h4><a href="https://developers.naver.com" target="_blank"><img src="https://developers.naver.com/inc/devcenter/images/nd_img.png"></a>'
+        content: parkingStr //'<h4> [더 클래스 청담]</h4><a href="http://theclasscheongdam.com" target="_blank"></a>'
+    });
+
+    var marker = new naver.maps.Marker({
             position: new naver.maps.LatLng(37.526098, 127.042259),
-            map: map
+            map: map,
+            icon: {
+                url: 'img/weddingMapIcon.png',
+                size: new naver.maps.Size(40, 45),
+                origin: new naver.maps.Point(0, 0),
+                anchor: new naver.maps.Point(20, 45)
+            }
         });
 
-          // 마커 클릭 이벤트 처리
-          naver.maps.Event.addListener(marker, "click", function(e) {
-            if (infowindow.getMap()) {
-                infowindow.close();
-            } else {
-                infowindow.open(map, marker);
-            }
-          });
-          // 마크 클릭시 인포윈도우 오픈
-          var infowindow = new naver.maps.InfoWindow({
-            //   content: '<h4> [네이버 개발자센터]</h4><a href="https://developers.naver.com" target="_blank"><img src="https://developers.naver.com/inc/devcenter/images/nd_img.png"></a>'
-              content: '<h4> [더 클래스 청담]</h4><a href="http://theclasscheongdam.com" target="_blank"></a>'
-          });
-      });
-      </script>
+    naver.maps.Event.addListener(marker, "click", function(e) {
+        if (infowindow.getMap()) {
+            infowindow.close();
+        } else {
+            infowindow.open(map, marker);
+        }
+    });
+    var weddingHoleStr = ['<div class="iw_inner">',
+        '   <p>서울 강남구 청담동 82-4 <br />',
+        '       <a href="http://theclasscheongdam.com/bbs/write.php?bo_table=contactus" target="_blank">더클래스 청담</a>',
+        '   </p>',
+        '</div>'].join('');
+
+    // 마크 클릭시 인포윈도우 오픈
+    var infowindow = new naver.maps.InfoWindow({
+        //   content: '<h4> [네이버 개발자센터]</h4><a href="https://developers.naver.com" target="_blank"><img src="https://developers.naver.com/inc/devcenter/images/nd_img.png"></a>'
+        content: weddingHoleStr //'<h4> [더 클래스 청담]</h4><a href="http://theclasscheongdam.com" target="_blank"></a>'
+    });
+
+    infowindow.open(map, marker);
+
+    </script>
 
 </body>
 
