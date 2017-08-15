@@ -439,9 +439,6 @@
         zoom: 11
     });
 
-    var myaddress = '압구정로60길';// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
-
-
     var parkingMarker = new naver.maps.Marker({
         position: new naver.maps.LatLng(37.524937, 127.045755),
         map: map,
@@ -470,7 +467,8 @@
     // 마크 클릭시 인포윈도우 오픈
     var parkingInfowindow = new naver.maps.InfoWindow({
         //   content: '<h4> [네이버 개발자센터]</h4><a href="https://developers.naver.com" target="_blank"><img src="https://developers.naver.com/inc/devcenter/images/nd_img.png"></a>'
-        content: parkingStr //'<h4> [더 클래스 청담]</h4><a href="http://theclasscheongdam.com" target="_blank"></a>'
+        content: parkingStr, //'<h4> [더 클래스 청담]</h4><a href="http://theclasscheongdam.com" target="_blank"></a>'
+        maxWidth: 180
     });
 
     var marker = new naver.maps.Marker({
@@ -499,8 +497,8 @@
 
     // 마크 클릭시 인포윈도우 오픈
     var infowindow = new naver.maps.InfoWindow({
-        //   content: '<h4> [네이버 개발자센터]</h4><a href="https://developers.naver.com" target="_blank"><img src="https://developers.naver.com/inc/devcenter/images/nd_img.png"></a>'
-        content: weddingHoleStr //'<h4> [더 클래스 청담]</h4><a href="http://theclasscheongdam.com" target="_blank"></a>'
+        content: weddingHoleStr, //'<h4> [더 클래스 청담]</h4><a href="http://theclasscheongdam.com" target="_blank"></a>'
+        maxWidth: 180,
     });
 
     infowindow.open(map, marker);
