@@ -443,8 +443,9 @@
         position: new naver.maps.LatLng(37.524937, 127.045755),
         map: map,
         icon: {
-            url: 'img/parkingMapIcon.png',
+            url: 'img/parkingMapIconScale.png',
             size: new naver.maps.Size(35, 40),
+            scaledSize: new naver.maps.Size(35, 40),
             origin: new naver.maps.Point(0, 0),
             anchor: new naver.maps.Point(15, 40)
         }
@@ -475,20 +476,14 @@
             position: new naver.maps.LatLng(37.526098, 127.042259),
             map: map,
             icon: {
-                url: 'img/weddingMapIcon.png',
+                url: 'img/weddingMapIconScale.png',
                 size: new naver.maps.Size(40, 45),
+                scaledSize: new naver.maps.Size(40, 45),
                 origin: new naver.maps.Point(0, 0),
                 anchor: new naver.maps.Point(20, 45)
             }
         });
 
-    naver.maps.Event.addListener(marker, "click", function(e) {
-        if (infowindow.getMap()) {
-            infowindow.close();
-        } else {
-            infowindow.open(map, marker);
-        }
-    });
     var weddingHoleStr = ['<div class="iw_inner">',
         '   <p>서울 강남구 청담동 82-4 <br />',
         '       <a href="http://theclasscheongdam.com/bbs/write.php?bo_table=contactus" target="_blank">더클래스 청담</a>',
@@ -499,6 +494,15 @@
     var infowindow = new naver.maps.InfoWindow({
         content: weddingHoleStr, //'<h4> [더 클래스 청담]</h4><a href="http://theclasscheongdam.com" target="_blank"></a>'
         maxWidth: 180,
+    });
+
+
+    naver.maps.Event.addListener(marker, "click", function(e) {
+        if (infowindow.getMap()) {
+            infowindow.close();
+        } else {
+            infowindow.open(map, marker);
+        }
     });
 
     infowindow.open(map, marker);
